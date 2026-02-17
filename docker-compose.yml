@@ -1,0 +1,27 @@
+services:
+  backend:
+    build: .
+    container_name: vca_backend
+    restart: always
+    env_file:
+      - .env
+    ports:
+      - "7000:7000"
+    depends_on:
+      - db
+
+  db:
+    image: postgres:15
+    container_name: vca_db
+    restart: always
+    environment:
+      POSTGRES_DB: vca
+      POSTGRES_USER: vca
+      POSTGRES_PASSWORD: vca
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
